@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aws-assume"
+version = "0.1.0"
+description = "Slick CLI for AWS SSO credential management across multiple accounts and roles"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Brian" }]
+keywords = ["aws", "sso", "iam", "credentials", "assume-role", "cli"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
+]
+
+dependencies = [
+    "boto3>=1.34",
+    "botocore>=1.34",
+    "click>=8.1",
+]
+
+[project.scripts]
+aws-assume = "aws_assume.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/brianjbeach/aws-assume"
+Repository = "https://github.com/brianjbeach/aws-assume"
+Issues = "https://github.com/brianjbeach/aws-assume"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aws_assume*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
