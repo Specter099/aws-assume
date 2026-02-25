@@ -10,18 +10,28 @@ Releases are automatically published to PyPI when you create a GitHub release.
 
 2. Create a PyPI project for `aws-assume` by doing a manual upload first (see [Manual Publishing](#manual-publishing) below), or reserve the name.
 
-3. Configure Trusted Publishing on PyPI:
-   - Go to your project on PyPI > **Settings** > **Publishing**
+3. Configure Trusted Publishing on **TestPyPI**:
+   - Go to [test.pypi.org](https://test.pypi.org) > your project > **Settings** > **Publishing**
+   - Add a new **GitHub** publisher:
+     - **Owner**: `Specter099`
+     - **Repository**: `aws-assume`
+     - **Workflow name**: `publish.yml`
+     - **Environment name**: `testpypi`
+
+4. Configure Trusted Publishing on **PyPI**:
+   - Go to [pypi.org](https://pypi.org) > your project > **Settings** > **Publishing**
    - Add a new **GitHub** publisher:
      - **Owner**: `Specter099`
      - **Repository**: `aws-assume`
      - **Workflow name**: `publish.yml`
      - **Environment name**: `pypi`
 
-4. Create a GitHub environment:
+5. Create GitHub environments:
    - Go to your repo **Settings** > **Environments**
+   - Create an environment named `testpypi`
    - Create an environment named `pypi`
-   - Optionally add a required reviewer for extra safety
+     - Add a required reviewer for production safety
+     - Optionally restrict deployment branches to tags only
 
 ### Creating a release
 
@@ -64,7 +74,8 @@ If you need to publish manually (e.g., for the first upload):
 
 ### Testing with TestPyPI
 
-To test the publishing process without affecting the real package index:
+TestPyPI is published automatically as part of the release workflow (before PyPI).
+To test manually without affecting the real package index:
 
 1. Create an account at [test.pypi.org](https://test.pypi.org/account/register/).
 
