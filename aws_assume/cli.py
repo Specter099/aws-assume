@@ -36,26 +36,68 @@ def _print_info(msg: str) -> None:
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(__version__, prog_name="aws-assume")
 @click.argument("profile", required=False)
-@click.option("--eval", "output_eval", is_flag=True, default=False,
-              help="Output shell export statements (default for terminal use).")
-@click.option("--env-file", "env_file", metavar="PATH", default=None,
-              help="Write credentials to a Docker-style .env file.")
-@click.option("--credentials", "write_creds", is_flag=True, default=False,
-              help="Write credentials to ~/.aws/credentials.")
-@click.option("--credentials-profile", "creds_profile", default=None, metavar="NAME",
-              help="Profile name to use when writing to credentials file.")
-@click.option("--json", "output_json", is_flag=True, default=False,
-              help="Output credentials as JSON.")
-@click.option("--duration", "duration", default=None,
-              type=click.IntRange(min=900, max=43200), metavar="SECONDS",
-              help="Session duration in seconds for role assumption (900–43200).")
-@click.option("--no-auto-login", "no_auto_login", is_flag=True, default=False,
-              help="Do not automatically trigger SSO login if session is expired.")
-@click.option("--list", "list_only", is_flag=True, default=False,
-              help="List available AWS profiles and exit.")
+@click.option(
+    "--eval",
+    "output_eval",
+    is_flag=True,
+    default=False,
+    help="Output shell export statements (default for terminal use).",
+)
+@click.option(
+    "--env-file",
+    "env_file",
+    metavar="PATH",
+    default=None,
+    help="Write credentials to a Docker-style .env file.",
+)
+@click.option(
+    "--credentials",
+    "write_creds",
+    is_flag=True,
+    default=False,
+    help="Write credentials to ~/.aws/credentials.",
+)
+@click.option(
+    "--credentials-profile",
+    "creds_profile",
+    default=None,
+    metavar="NAME",
+    help="Profile name to use when writing to credentials file.",
+)
+@click.option(
+    "--json", "output_json", is_flag=True, default=False, help="Output credentials as JSON."
+)
+@click.option(
+    "--duration",
+    "duration",
+    default=None,
+    type=click.IntRange(min=900, max=43200),
+    metavar="SECONDS",
+    help="Session duration in seconds for role assumption (900–43200).",
+)
+@click.option(
+    "--no-auto-login",
+    "no_auto_login",
+    is_flag=True,
+    default=False,
+    help="Do not automatically trigger SSO login if session is expired.",
+)
+@click.option(
+    "--list", "list_only", is_flag=True, default=False, help="List available AWS profiles and exit."
+)
 @click.pass_context
-def cli(ctx, profile, output_eval, env_file, write_creds, creds_profile,
-        output_json, duration, no_auto_login, list_only):
+def cli(
+    ctx,
+    profile,
+    output_eval,
+    env_file,
+    write_creds,
+    creds_profile,
+    output_json,
+    duration,
+    no_auto_login,
+    list_only,
+):
     """Simple CLI for AWS SSO credential management across multiple accounts and roles.
 
     \b
@@ -127,9 +169,7 @@ def _cmd_list() -> None:
     profiles = list_profiles()
     if not profiles:
         config_path = _get_aws_config_path()
-        click.echo(
-            click.style(f"No profiles found in {config_path}", fg="yellow"), err=True
-        )
+        click.echo(click.style(f"No profiles found in {config_path}", fg="yellow"), err=True)
         return
     click.echo(click.style("Available profiles:", fg="cyan", bold=True), err=True)
     for p in profiles:

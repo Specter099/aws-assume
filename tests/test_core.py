@@ -11,7 +11,6 @@ import pytest
 
 from aws_assume.core import (
     Credentials,
-    _get_aws_config_path,
     list_profiles,
     write_credentials_file,
 )
@@ -84,6 +83,7 @@ class TestCredentials:
 
     def test_to_json(self, sample_creds: Credentials) -> None:
         import json
+
         result = json.loads(sample_creds.to_json())
         assert result["AccessKeyId"] == "AKIAIOSFODNN7EXAMPLE"
         assert "SecretAccessKey" in result
@@ -92,6 +92,7 @@ class TestCredentials:
 
     def test_to_json_no_session_token(self) -> None:
         import json
+
         creds = Credentials(
             access_key_id="AKID",
             secret_access_key="SAK",
@@ -123,7 +124,8 @@ class TestCredentials:
 class TestListProfiles:
     def test_list_profiles(self, tmp_path: Path) -> None:
         config_file = tmp_path / "config"
-        config_file.write_text(textwrap.dedent("""\
+        config_file.write_text(
+            textwrap.dedent("""\
             [default]
             region = us-east-1
 
@@ -134,7 +136,8 @@ class TestListProfiles:
             [profile prod]
             role_arn = arn:aws:iam::123456789012:role/Admin
             source_profile = dev
-        """))
+        """)
+        )
 
         with patch("aws_assume.core._get_aws_config_path", return_value=config_file):
             profiles = list_profiles()
@@ -174,11 +177,13 @@ class TestWriteCredentialsFile:
         self, tmp_path: Path, sample_creds: Credentials
     ) -> None:
         creds_file = tmp_path / "credentials"
-        creds_file.write_text(textwrap.dedent("""\
+        creds_file.write_text(
+            textwrap.dedent("""\
             [existing-profile]
             aws_access_key_id = EXISTINGKEY
             aws_secret_access_key = EXISTINGSECRET
-        """))
+        """)
+        )
 
         with patch("aws_assume.core._get_aws_credentials_path", return_value=creds_file):
             write_credentials_file(sample_creds, profile_name="new-profile")

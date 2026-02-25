@@ -93,7 +93,7 @@ def list_profiles() -> list[str]:
         if section == "default":
             profiles.append("default")
         elif section.startswith("profile "):
-            profiles.append(section[len("profile "):])
+            profiles.append(section[len("profile ") :])
     return sorted(profiles)
 
 
@@ -140,9 +140,7 @@ def resolve_credentials(
     if _seen is None:
         _seen = frozenset()
     if profile_name in _seen:
-        raise ValueError(
-            f"Credential chain cycle detected involving profile '{profile_name}'"
-        )
+        raise ValueError(f"Credential chain cycle detected involving profile '{profile_name}'")
     _seen = _seen | {profile_name}
 
     profile_config = _get_profile_config(profile_name)
@@ -185,9 +183,14 @@ def _resolve_sso_credentials(
             raise RuntimeError("Failed to resolve SSO credentials: token expired") from e
         except ClientError as e:
             code = e.response.get("Error", {}).get("Code", "")
-            if auto_login and attempt == 0 and code in (
-                "UnauthorizedException",
-                "ExpiredTokenException",
+            if (
+                auto_login
+                and attempt == 0
+                and code
+                in (
+                    "UnauthorizedException",
+                    "ExpiredTokenException",
+                )
             ):
                 _trigger_sso_login(profile_name)
                 continue
@@ -264,9 +267,7 @@ def _resolve_boto3_credentials(profile_name: str) -> Credentials:
             profile_name=profile_name,
         )
     except Exception as e:
-        raise RuntimeError(
-            f"Failed to resolve credentials for profile '{profile_name}'"
-        ) from e
+        raise RuntimeError(f"Failed to resolve credentials for profile '{profile_name}'") from e
 
 
 def _get_sso_expiration(session: boto3.Session) -> str | None:

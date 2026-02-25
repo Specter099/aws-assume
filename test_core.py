@@ -5,13 +5,12 @@ from __future__ import annotations
 import configparser
 import textwrap
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
 from aws_assume.core import (
     Credentials,
-    _get_aws_config_path,
     list_profiles,
     write_credentials_file,
 )
@@ -32,8 +31,8 @@ class TestCredentials:
     def test_to_eval(self, sample_creds: Credentials) -> None:
         result = sample_creds.to_eval()
         assert 'export AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"' in result
-        assert 'export AWS_SECRET_ACCESS_KEY=' in result
-        assert 'export AWS_SESSION_TOKEN=' in result
+        assert "export AWS_SECRET_ACCESS_KEY=" in result
+        assert "export AWS_SESSION_TOKEN=" in result
         assert 'export AWS_ASSUME_PROFILE="my-profile"' in result
 
     def test_to_env_file(self, sample_creds: Credentials) -> None:
@@ -46,6 +45,7 @@ class TestCredentials:
 
     def test_to_json(self, sample_creds: Credentials) -> None:
         import json
+
         result = json.loads(sample_creds.to_json())
         assert result["AccessKeyId"] == "AKIAIOSFODNN7EXAMPLE"
         assert "SecretAccessKey" in result
@@ -62,7 +62,8 @@ class TestCredentials:
 class TestListProfiles:
     def test_list_profiles(self, tmp_path: Path) -> None:
         config_file = tmp_path / "config"
-        config_file.write_text(textwrap.dedent("""\
+        config_file.write_text(
+            textwrap.dedent("""\
             [default]
             region = us-east-1
 
@@ -73,7 +74,8 @@ class TestListProfiles:
             [profile prod]
             role_arn = arn:aws:iam::123456789012:role/Admin
             source_profile = dev
-        """))
+        """)
+        )
 
         with patch("aws_assume.core._get_aws_config_path", return_value=config_file):
             profiles = list_profiles()
@@ -104,11 +106,13 @@ class TestWriteCredentialsFile:
         self, tmp_path: Path, sample_creds: Credentials
     ) -> None:
         creds_file = tmp_path / "credentials"
-        creds_file.write_text(textwrap.dedent("""\
+        creds_file.write_text(
+            textwrap.dedent("""\
             [existing-profile]
             aws_access_key_id = EXISTINGKEY
             aws_secret_access_key = EXISTINGSECRET
-        """))
+        """)
+        )
 
         with patch("aws_assume.core._get_aws_credentials_path", return_value=creds_file):
             write_credentials_file(sample_creds, profile_name="new-profile")

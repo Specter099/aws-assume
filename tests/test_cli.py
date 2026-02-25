@@ -49,10 +49,12 @@ class TestCLI:
 
     def test_json_output(self, runner: CliRunner, mock_creds: Credentials) -> None:
         import json
+
         with patch("aws_assume.cli.resolve_credentials", return_value=mock_creds):
             result = runner.invoke(cli, ["dev", "--json"])
         assert result.exit_code == 0
         import re
+
         match = re.search(r"{.*?}", result.output, re.DOTALL)
         assert match, f"No JSON found in output: {result.output!r}"
         data = json.loads(match.group())
@@ -97,7 +99,8 @@ class TestCLI:
     def test_invalid_profile_name_rejected(self, runner: CliRunner) -> None:
         result = runner.invoke(cli, ["profile with spaces"])
         assert result.exit_code == 1
-        assert "Invalid profile name" in result.output + result.stderr if hasattr(result, 'stderr') else "Invalid profile name" in result.output
+        output = result.output + (result.stderr if hasattr(result, "stderr") else "")
+        assert "Invalid profile name" in output
 
     def test_credentials_file_output(
         self, runner: CliRunner, mock_creds: Credentials, tmp_path: Path
