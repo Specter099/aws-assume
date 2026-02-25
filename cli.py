@@ -50,7 +50,7 @@ def _print_info(msg: str) -> None:
 @click.pass_context
 def cli(ctx, profile, output_eval, env_file, write_creds, creds_profile,
         output_json, duration, no_auto_login, list_only):
-    """Slick CLI for AWS SSO credential management across multiple accounts and roles.
+    """Simple CLI for AWS SSO credential management across multiple accounts and roles.
 
     \b
     Examples:
