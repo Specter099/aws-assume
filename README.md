@@ -1,5 +1,9 @@
 # aws-assume
 
+[![CI](https://github.com/Specter099/aws-assume/actions/workflows/ci.yml/badge.svg)](https://github.com/Specter099/aws-assume/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/aws-assume-cli)](https://pypi.org/project/aws-assume-cli/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Simple CLI for AWS SSO credential management across multiple accounts and roles.
 
 ## Installation
