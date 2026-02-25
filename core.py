@@ -9,7 +9,6 @@ import subprocess
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 import boto3
 from botocore.exceptions import ClientError, TokenRetrievalError
@@ -85,7 +84,7 @@ def list_profiles() -> list[str]:
         if section == "default":
             profiles.append("default")
         elif section.startswith("profile "):
-            profiles.append(section[len("profile "):])
+            profiles.append(section[len("profile ") :])
     return sorted(profiles)
 
 
@@ -115,7 +114,7 @@ def _trigger_sso_login(profile_name: str) -> None:
 
 def resolve_credentials(
     profile_name: str,
-    duration_seconds: Optional[int] = None,
+    duration_seconds: int | None = None,
     auto_login: bool = True,
 ) -> Credentials:
     """
@@ -174,7 +173,7 @@ def _resolve_sso_credentials(
 def _resolve_role_credentials(
     profile_name: str,
     profile_config: dict,
-    duration_seconds: Optional[int],
+    duration_seconds: int | None,
     auto_login: bool,
 ) -> Credentials:
     """Resolve credentials by assuming a role, using source_profile as the base."""
@@ -233,10 +232,12 @@ def _resolve_boto3_credentials(profile_name: str) -> Credentials:
             profile_name=profile_name,
         )
     except Exception as e:
-        raise RuntimeError(f"Failed to resolve credentials for profile '{profile_name}': {e}") from e
+        raise RuntimeError(
+            f"Failed to resolve credentials for profile '{profile_name}': {e}"
+        ) from e
 
 
-def _get_sso_expiration(session: boto3.Session) -> Optional[str]:
+def _get_sso_expiration(session: boto3.Session) -> str | None:
     """Attempt to extract SSO token expiration from the session."""
     try:
         resolver = session._session.get_component("credential_provider")
