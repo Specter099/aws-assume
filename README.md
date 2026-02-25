@@ -1,11 +1,11 @@
 # aws-assume
 
-Slick CLI for AWS SSO credential management across multiple accounts and roles.
+Simple CLI for AWS SSO credential management across multiple accounts and roles.
 
 ## Installation
 
 ```bash
-pip install aws-assume
+pip install aws-assume-cli
 ```
 
 ## Usage

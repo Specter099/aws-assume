@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aws-assume"
+name = "aws-assume-cli"
 version = "0.1.0"
-description = "Slick CLI for AWS SSO credential management across multiple accounts and roles"
+description = "Simple CLI for AWS SSO credential management across multiple accounts and roles"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
