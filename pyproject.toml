@@ -34,9 +34,9 @@ dependencies = [
 aws-assume = "aws_assume.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/brianjbeach/aws-assume"
-Repository = "https://github.com/brianjbeach/aws-assume"
-Issues = "https://github.com/brianjbeach/aws-assume"
+Homepage = "https://github.com/Specter099/aws-assume-cli"
+Repository = "https://github.com/Specter099/aws-assume-cli"
+Issues = "https://github.com/Specter099/aws-assume-cli/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
