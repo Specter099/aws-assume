@@ -1,6 +1,6 @@
 # aws-assume
 
-[![CI](https://github.com/Specter099/aws-assume/actions/workflows/ci.yml/badge.svg)](https://github.com/Specter099/aws-assume/actions/workflows/ci.yml)
+[![CI](https://github.com/Specter099/aws-assume-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/Specter099/aws-assume-cli/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/aws-assume-cli)](https://pypi.org/project/aws-assume-cli/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -78,8 +78,8 @@ region = us-east-1
 ## Development
 
 ```bash
-git clone https://github.com/brianjbeach/aws-assume
-cd aws-assume
+git clone https://github.com/Specter099/aws-assume-cli
+cd aws-assume-cli
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest
