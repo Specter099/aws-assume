@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aws-assume-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simple CLI for AWS SSO credential management across multiple accounts and roles"
 readme = "README.md"
 license = { text = "MIT" }
